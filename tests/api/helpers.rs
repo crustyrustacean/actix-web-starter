@@ -1,10 +1,10 @@
 // tests/api/helpers.rs
 
 // dependencies
-use std::sync::LazyLock;
 use actix_web_starter::configuration::get_configuration;
 use actix_web_starter::startup::Application;
 use actix_web_starter::telemetry::{get_subscriber, init_subscriber};
+use std::sync::LazyLock;
 
 // Ensure that the `tracing` stack is only initialised once using `once_cell`
 static TRACING: LazyLock<()> = LazyLock::new(|| {
@@ -57,6 +57,3 @@ pub async fn spawn_app() -> TestApp {
 
     test_app
 }
-
-
-
