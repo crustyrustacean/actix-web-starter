@@ -2,9 +2,9 @@
 
 // dependencies
 use actix_web::{HttpRequest, HttpResponse, Responder, body::BoxBody, http::header::ContentType};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct ApiResponse<T> {
     pub success: bool,
     pub data: Option<T>,

@@ -19,6 +19,7 @@ static TRACING: LazyLock<()> = LazyLock::new(|| {
     };
 });
 
+#[allow(dead_code)]
 pub struct TestApp {
     pub address: String,
     pub port: u16,
@@ -28,12 +29,9 @@ pub struct TestApp {
 pub async fn spawn_app() -> TestApp {
     LazyLock::force(&TRACING);
 
-    // Randomise configuration to ensure test isolation
     let configuration = {
         let mut c = get_configuration().expect("Failed to read configuration.");
-        // Use a random OS port
         c.application.port = 0;
-        // Use the mock server as email API
         c
     };
 

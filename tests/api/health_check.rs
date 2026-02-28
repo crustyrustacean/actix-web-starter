@@ -2,6 +2,7 @@
 
 // dependencies
 use crate::helpers::spawn_app;
+use actix_web_starter::response::ApiResponse;
 
 #[tokio::test]
 async fn health_check_works() {
@@ -11,7 +12,6 @@ async fn health_check_works() {
 
     // Act
     let response = client
-        // Use the returned application address
         .get(&format!("{}/health_check", &app.address))
         .send()
         .await
@@ -19,5 +19,13 @@ async fn health_check_works() {
 
     // Assert
     assert!(response.status().is_success());
-    assert_eq!(Some(0), response.content_length());
+
+    let body: ApiResponse<()> = response
+        .json()
+        .await
+        .expect("Failed to deserialize response.");
+
+    assert!(body.success);
+    assert!(body.data.is_none());
+    assert!(body.error.is_none());
 }

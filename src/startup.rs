@@ -6,6 +6,7 @@ use crate::routes::health_check;
 use actix_web::dev::Server;
 use actix_web::{App, HttpServer, web, web::Data};
 use std::net::TcpListener;
+use tracing_actix_web::TracingLogger;
 
 pub struct Application {
     port: u16,
@@ -24,7 +25,6 @@ impl Application {
         Ok(Self { port, server })
     }
 
-    #[allow(dead_code)]
     pub fn port(&self) -> u16 {
         self.port
     }
@@ -40,6 +40,7 @@ async fn run(listener: TcpListener, base_url: String) -> Result<Server, anyhow::
     let base_url = Data::new(ApplicationBaseUrl(base_url));
     let server = HttpServer::new(move || {
         App::new()
+            .wrap(TracingLogger::default())
             .route("/health_check", web::get().to(health_check))
             .app_data(base_url.clone())
     })

@@ -7,10 +7,3 @@ pub mod response;
 pub mod routes;
 pub mod startup;
 pub mod telemetry;
-
-// re-exports
-pub use configuration::*;
-pub use error::*;
-pub use response::*;
-pub use startup::*;
-pub use telemetry::*;
