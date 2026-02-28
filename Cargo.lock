@@ -187,7 +187,7 @@ dependencies = [
 
 [[package]]
 name = "actix-web-starter"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
  "actix-web",
  "anyhow",
@@ -196,6 +196,8 @@ dependencies = [
  "reqwest",
  "serde",
  "serde-aux",
+ "serde_json",
+ "thiserror 2.0.18",
  "tokio",
  "tracing",
  "tracing-actix-web",

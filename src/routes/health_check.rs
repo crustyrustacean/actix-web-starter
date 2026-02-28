@@ -1,9 +1,10 @@
 // src/routes/health_check.rs
 
 // dependencies
-use actix_web::{HttpResponse, Responder};
+use crate::ApiResponse;
+use actix_web::Responder;
 
 /// health check endpoint
 pub async fn health_check() -> impl Responder {
-    HttpResponse::Ok()
+    ApiResponse::success(())
 }
