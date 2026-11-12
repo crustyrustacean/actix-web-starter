@@ -2,6 +2,14 @@
 
 All notable changes to the Actix Web Starter project will be documented in this file.
 
+## [0.3.0] - 2026-11-12
+
+### General Cleanup and Dependencies Update
+
+- remove incorrect `response.rs` and `error.rs`
+- clean up `Cargo.toml`
+- add proper `README.md`
+
 ## [0.2.0] - 2026-02-22
 
 ### Finish Zero2Prod style template

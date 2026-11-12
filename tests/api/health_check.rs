@@ -1,8 +1,6 @@
 // tests/api/health_check.rs
 
-// dependencies
 use crate::helpers::spawn_app;
-use actix_web_starter::response::ApiResponse;
 
 #[tokio::test]
 async fn health_check_works() {
@@ -12,20 +10,33 @@ async fn health_check_works() {
 
     // Act
     let response = client
-        .get(&format!("{}/health_check", &app.address))
+        // Use the returned application address
+        .get(format!("{}/api/v1/health_check", app.address))
         .send()
         .await
         .expect("Failed to execute request.");
 
     // Assert
-    assert!(response.status().is_success());
+    assert_eq!(reqwest::StatusCode::OK, response.status());
+    assert_eq!(Some(0), response.content_length());
+}
 
-    let body: ApiResponse<()> = response
-        .json()
-        .await
-        .expect("Failed to deserialize response.");
+#[tokio::test]
+async fn health_check_requires_a_supported_api_version() {
+    let app = spawn_app().await;
+    let client = reqwest::Client::new();
 
-    assert!(body.success);
-    assert!(body.data.is_none());
-    assert!(body.error.is_none());
+    for path in ["/health_check", "/api/health_check", "/api/v2/health_check"] {
+        let response = client
+            .get(format!("{}{path}", app.address))
+            .send()
+            .await
+            .expect("Failed to execute request.");
+
+        assert_eq!(
+            reqwest::StatusCode::NOT_FOUND,
+            response.status(),
+            "Unexpected status for {path}"
+        );
+    }
 }

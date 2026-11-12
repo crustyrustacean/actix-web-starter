@@ -41,7 +41,7 @@ async fn run(listener: TcpListener, base_url: String) -> Result<Server, anyhow::
     let server = HttpServer::new(move || {
         App::new()
             .wrap(TracingLogger::default())
-            .route("/health_check", web::get().to(health_check))
+            .service(web::scope("/api/v1").route("/health_check", web::get().to(health_check)))
             .app_data(base_url.clone())
     })
     .listen(listener)?
