@@ -2,6 +2,20 @@
 
 All notable changes to the Actix Web Starter project will be documented in this file.
 
+## [0.3.1] - 2026-11-17
+
+### Vercel Docker Proof of Concept
+
+- Add a multi-stage Dockerfile with Cargo Chef dependency caching and locked release builds.
+- Use matching Debian Bookworm build/runtime images and run the application as a non-root user.
+- Include runtime YAML configuration, select production settings, and map `PORT` to `APP_APPLICATION__PORT`.
+- Supply a container-only `APP_APPLICATION__BASE_URL` default of `http://localhost`; override it with the deployment URL.
+- Add `.dockerignore` to exclude build output and tests from the build context.
+- Add `GET /api/v1/hello`, returning a JSON greeting for the deployment demo.
+- Enable release binary stripping and thin link-time optimization.
+- Remove the local `base_url` default; local runs and tests now require `APP_APPLICATION__BASE_URL`.
+- Store the application base URL directly as application data instead of using the `ApplicationBaseUrl` wrapper.
+
 ## [0.3.0] - 2026-11-12
 
 ### General Cleanup and Dependencies Update

@@ -1,6 +1,6 @@
 [package]
 name = "actix-web-starter"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2024"
 authors = ["Jeffery D. Mitchell", "<crusty.rustacean@gmail.com>"]
 description = "A starter for a backend in Actix Web"
@@ -29,4 +29,8 @@ tracing-actix-web = "0.7"
 tracing-log = "0.2"
 tracing-bunyan-formatter = "0.3"
 tracing-subscriber = { version = "0.3", features = ["registry", "env-filter"] }
+
+[profile.release]
+strip = true
+lto = "thin"
 
