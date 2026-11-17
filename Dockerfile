@@ -22,7 +22,6 @@ COPY --from=build /app/target/release/actix-web-starter /usr/local/bin/server
 COPY configuration/ ./configuration/
 ENV APP_ENVIRONMENT=production \
     APP_APPLICATION__HOST=0.0.0.0 \
-    APP_APPLICATION__BASE_URL=http://localhost \
     PORT=80
 USER 65532:65532
 # exec lets Actix receive termination signals directly, rather than through sh.

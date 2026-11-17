@@ -21,7 +21,7 @@ impl Application {
         );
         let listener = TcpListener::bind(address)?;
         let port = listener.local_addr()?.port();
-        let server = run(listener, configuration.application.base_url).await?;
+        let server = run(listener).await?;
         Ok(Self { port, server })
     }
 
@@ -34,16 +34,13 @@ impl Application {
     }
 }
 
-async fn run(listener: TcpListener, base_url: String) -> Result<Server, anyhow::Error> {
+async fn run(listener: TcpListener) -> Result<Server, anyhow::Error> {
     let server = HttpServer::new(move || {
-        App::new()
-            .wrap(TracingLogger::default())
-            .service(
-                web::scope("/api/v1")
-                    .route("/health_check", web::get().to(health_check))
-                    .route("/hello", web::get().to(hello)),
-            )
-            .app_data(base_url.clone())
+        App::new().wrap(TracingLogger::default()).service(
+            web::scope("/api/v1")
+                .route("/health_check", web::get().to(health_check))
+                .route("/hello", web::get().to(hello)),
+        )
     })
     .listen(listener)?
     .run();

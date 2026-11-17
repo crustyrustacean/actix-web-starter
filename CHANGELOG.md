@@ -2,6 +2,14 @@
 
 All notable changes to the Actix Web Starter project will be documented in this file.
 
+## [0.3.2] - 2026-11-17
+
+### Remove Unused Base URL Configuration
+
+- Remove the unused application `base_url` setting and its registration as application data.
+- Remove `APP_APPLICATION__BASE_URL` from the Dockerfile and README examples.
+- Local runs, production runs, and tests no longer require a base URL environment override.
+
 ## [0.3.1] - 2026-11-17
 
 ### Vercel Docker Proof of Concept

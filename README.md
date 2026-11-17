@@ -36,7 +36,6 @@ Set `APP_ENVIRONMENT` to `local` (the default) or `production`. These values are
 | --- | --- | --- | --- |
 | Listen host | `APP_APPLICATION__HOST` | `127.0.0.1` | `0.0.0.0` |
 | Listen port | `APP_APPLICATION__PORT` | `8000` | `8000` |
-| Application base URL | `APP_APPLICATION__BASE_URL` | `http://127.0.0.1` | **Required; not supplied** |
 
 For example, to run locally on a different port:
 
@@ -51,25 +50,22 @@ $env:APP_APPLICATION__PORT = "8080"
 cargo run --locked
 ```
 
-> **Production:** `base_url` is required, but the supplied production configuration does not set it. Provide it through `APP_APPLICATION__BASE_URL` or add it to the YAML before starting the server. Production listens on all IPv4 interfaces by default.
+> **Production:** Production listens on all IPv4 interfaces by default.
 
 For example, in a POSIX shell:
 
 ```sh
-APP_ENVIRONMENT=production \
-APP_APPLICATION__BASE_URL=https://api.example.com \
-cargo run --locked --release
+APP_ENVIRONMENT=production cargo run --locked --release
 ```
 
 Or in PowerShell:
 
 ```powershell
 $env:APP_ENVIRONMENT = "production"
-$env:APP_APPLICATION__BASE_URL = "https://api.example.com"
 cargo run --locked --release
 ```
 
-The base URL is made available to handlers as application data; it does not set the listening address or enable HTTPS. The server currently serves plain HTTP, so terminate TLS at a reverse proxy or add TLS support before exposing it over HTTPS. Set environment variables in your shell or deployment environment; the starter does not load `.env` files.
+The server currently serves plain HTTP, so terminate TLS at a reverse proxy or add TLS support before exposing it over HTTPS. Set environment variables in your shell or deployment environment; the starter does not load `.env` files.
 
 Configuration files are resolved relative to the **current working directory**, not the executable. Run from the project root, or deploy the `configuration/` directory beneath the server's working directory.
 
